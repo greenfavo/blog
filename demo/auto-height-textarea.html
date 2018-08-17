@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>自适应高度输入框</title>
+  <style>
+  #textarea {
+    width: 300px;
+    height: 30px;
+    outline: none;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    resize: none;
+    font-size: 20px;
+    overflow: hidden
+  }
+  a {
+    text-decoration: none
+  }
+  </style>
+</head>
+<body>
+  <p><a href="https://github.com/greenfavo/blog/auto-height-textarea.html" target="_blank">查看源码</a></p>
+  <textarea id="textarea"></textarea>
+  <script>
+  var $textarea = document.getElementById('textarea')
+  var lastLength = 0 // 上一次输入的字数
+  var lastHeigth = 0 // 上一次的高度
+  $textarea.addEventListener('input', function () {
+    var currentLength = $textarea.value.length
+    
+    // 字数减少时需要清除高度样式，重新获取
+    if (currentLength < lastLength) {
+      $textarea.style.height = ''
+    }
+    // 一定要在清除高度后获取scrollHeight
+    var currentHeight = $textarea.scrollHeight
+
+    if (lastHeigth !== currentHeight || !$textarea.style.height) {
+      $textarea.style.height = currentHeight + 'px'
+    }
+    lastLength = currentLength
+    lastHeigth = currentHeight
+  })
+  </script>
+</body>
+</html>
