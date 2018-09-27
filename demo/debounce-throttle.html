@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>节流防抖</title>
+  <style>
+  body {
+    height: 1000px;
+  }
+  </style>
+</head>
+<body>
+  无处理：<input type="text" id="input1"/><br/>
+  防抖后：<input type="text" id="input2"/><br/>
+  节流后：<input type="text" id="input3"/>
+
+  <script>
+  let $input1 = document.querySelector('#input1')
+  let $input2 = document.querySelector('#input2')
+  let $input3 = document.querySelector('#input3')
+  function func (content) {
+    console.log(content, new Date())
+  }
+  $input1.addEventListener('input', function (e) {
+    func(e.target.value)
+  })
+
+  let debounceFunc = debounce(func, 500)
+  $input2.addEventListener('input', function (e) {
+    debounceFunc(e.target.value)
+  })
+
+  let throttleFunc = throttle(func, 1000)
+  $input3.addEventListener('input', function (e) {
+    throttleFunc(e.target.value)
+  })
+
+  window.addEventListener('scroll', () => {
+    throttleFunc('scroll')
+  })
+  // 防抖：事件停止触发n秒后再执行函数，如果在这n秒内又被触发，则重新计时。
+  function debounce(func, delay, context) {
+    let timer = 0
+    return (...args) => { 
+      clearTimeout(timer)
+      timer = setTimeout(() => {
+        // 将参数全部传给func
+        func(...args)
+      }, delay)
+    }
+  }
+
+  // 节流：在一定时间间隔内，只执行一次函数
+  function throttle (func, delay) {
+    let lastTime = 0 // 上一次执行函数的时间
+    let timer = 0
+    return (...args) => {
+      let now = new Date()
+      clearTimeout(timer)
+      if (now - lastTime >= delay) {
+        func(...args)
+        lastTime = now
+      } else {
+        // 保证最后一次能执行
+        timer = setTimeout(() => {
+          func(...args)
+          lastTime = now
+        }, delay)
+      }
+    }
+  }
+  </script>
+</body>
+</html>
