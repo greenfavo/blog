@@ -2,6 +2,7 @@
 > 好记性不如烂笔头，记录平时的前端开发经验。
 
 ## 目录
+- [Vue Devtool 5.0的炫酷新功能概览](./docs/07.md)
 - [极简式节流与防抖](./docs/06.md)
 - [简单的自适应高度输入框](https://greenfavo.github.io/blog/demo/auto-height-textarea.html)
 - [使用postMessage进行Iframe跨域通信](./docs/05.md)
